@@ -2,17 +2,20 @@
 
 namespace App\Services\Rabbit;
 
+use App\Services\BaseService;
 use PhpAmqpLib\Message\AMQPMessage;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 
-class ProduceMessagesService extends ProduceMessagesBaseService
+class ProduceMessagesBaseService extends BaseService
 {
+    protected string $host;
+
     /**
      *
      */
     public function __construct()
     {
-
+        $this->host = config("rabbitmq.host");
     }
 
     /**
