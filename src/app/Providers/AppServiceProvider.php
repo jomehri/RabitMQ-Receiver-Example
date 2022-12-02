@@ -2,15 +2,9 @@
 
 namespace App\Providers;
 
-use App\Services\Sale\UserCoinService;
+use App\Interfaces\Repositories\Notification\INotificationRepository;
+use App\Repositories\Notification\NotificationRepository;
 use Illuminate\Support\ServiceProvider;
-use App\Repositories\Sale\CoinRepository;
-use App\Repositories\Basic\UserRepository;
-use App\Repositories\Sale\UserCoinRepository;
-use App\Interfaces\Services\Sale\IUserCoinService;
-use App\Interfaces\Repositories\Sale\ICoinRepository;
-use App\Interfaces\Repositories\Basic\IUserRepository;
-use App\Interfaces\Repositories\Sale\IUserCoinRepository;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -30,16 +24,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->registerServices();
         $this->registerRepositories();
-    }
-
-    /**
-     * @return void
-     */
-    public function registerServices(): void
-    {
-        $this->app->bind(IUserCoinService::class, UserCoinService::class);
     }
 
     /**
@@ -47,8 +32,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function registerRepositories(): void
     {
-        $this->app->singleton(IUserRepository::class, UserRepository::class);
-        $this->app->singleton(ICoinRepository::class, CoinRepository::class);
-        $this->app->singleton(IUserCoinRepository::class, UserCoinRepository::class);
+        $this->app->singleton(INotificationRepository::class, NotificationRepository::class);
     }
+
+
 }

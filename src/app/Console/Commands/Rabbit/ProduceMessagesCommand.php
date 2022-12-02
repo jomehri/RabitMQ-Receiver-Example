@@ -4,6 +4,7 @@ namespace App\Console\Commands\Rabbit;
 
 use Illuminate\Console\Command;
 use App\Services\Rabbit\ProduceMessagesService;
+use App\Interfaces\Repositories\Notification\INotificationRepository;
 
 class ProduceMessagesCommand extends Command
 {
@@ -21,14 +22,19 @@ class ProduceMessagesCommand extends Command
      */
     protected $description = 'Produces a number of fake messages in rabbitMQ';
 
+    /** @var INotificationRepository $notificationRepository */
+    private INotificationRepository $notificationRepository;
+
     /**
      * Create a new command instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(INotificationRepository $notificationRepository)
     {
         parent::__construct();
+
+        $this->notificationRepository = $notificationRepository;
     }
 
     /**

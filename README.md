@@ -6,6 +6,7 @@
 - No Eloquent, Doctrine used (pure mysql)
 - Unit/Feature tests
 - No Laravel rabbitMQ packages used (like vyuldashev 's package), just pure php-amqplib used
+- Strategy & Repository design patterns
 
 ## Installation:
 
@@ -19,5 +20,6 @@
 - cp .env.testing.example .env.testing
 - sudo chmod 777 storage/ -R
 - cd ../docker
-- docker-compose exec alijomehri-php-web php artisan migrate
-- docker-compose exec alijomehri-php-web php artisan rabbitmq:produce (to produce messages)
+- docker-compose exec php-web php artisan migrate
+- open up a few consumer workers by this command in multiple terminals: docker-compose exec php-web php artisan rabbitmq:consume
+- docker-compose exec php-web php artisan rabbitmq:produce (to produce 1000 messages)

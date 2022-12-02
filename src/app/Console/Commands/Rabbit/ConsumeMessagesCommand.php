@@ -5,6 +5,7 @@ namespace App\Console\Commands\Rabbit;
 use ErrorException;
 use Illuminate\Console\Command;
 use App\Services\Rabbit\ConsumeMessagesService;
+use App\Interfaces\Repositories\Notification\INotificationRepository;
 
 class ConsumeMessagesCommand extends Command
 {
@@ -22,14 +23,19 @@ class ConsumeMessagesCommand extends Command
      */
     protected $description = 'Produces a number of fake messages in rabbitMQ';
 
+    /** @var INotificationRepository $notificationRepository */
+    private INotificationRepository $notificationRepository;
+
     /**
      * Create a new command instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(INotificationRepository $notificationRepository)
     {
-        parent::__construct();
+        parent::__construct($notificationRepository);
+
+        $this->notificationRepository = $notificationRepository;
     }
 
     /**
@@ -40,7 +46,7 @@ class ConsumeMessagesCommand extends Command
      */
     public function handle(): void
     {
-        $consumeService = new ConsumeMessagesService();
+        $consumeService = new ConsumeMessagesService($this->notificationRepository);
         $consumeService->run();
 
         $this->info("messages consumed");

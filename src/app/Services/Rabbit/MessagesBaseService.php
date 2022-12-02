@@ -2,6 +2,7 @@
 
 namespace App\Services\Rabbit;
 
+use App\Interfaces\Services\Notification\INotificationService;
 use App\Services\BaseService;
 use PhpAmqpLib\Channel\AMQPChannel;
 use PhpAmqpLib\Message\AMQPMessage;
