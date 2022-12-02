@@ -3,6 +3,7 @@
 use App\Models\BaseModel;
 use Illuminate\Support\Facades\DB;
 use App\Models\Logs\NotificationLog;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Migrations\Migration;
 
 class CreateNotificationLogsTable extends Migration
@@ -35,7 +36,7 @@ class CreateNotificationLogsTable extends Migration
      */
     public function down()
     {
-//        Schema::dropIfExists(User::getDBTable());
+        Schema::dropIfExists(NotificationLog::getDBTable());
     }
 
 }
