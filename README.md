@@ -2,27 +2,21 @@
 
 ## What's included:
 
-- Dockerized
-- Swagger API Documentation
-- <b>Repository Design Pattern</b>
-- <b>Race condition</b> prevention (database locks: both MySql & Redis)
+- Production Readiness (Dockerized)
 - SOLID, DRY, OOP, KISS
-- Feature tests
-- Form request validation
-- Localization and translates
+- Unit/Feature tests
 
 ## Installation:
 
+- [install docker](https://docs.docker.com/get-docker/) based on your system environment
+- cd project folder
 - cd docker
-- docker-compose build
-- docker-compose up --remove-orphans
+- docker-compose up
 - cd ../src
 - composer install
 - cp .env.example .env
 - cp .env.testing.example .env.testing
 - sudo chmod 777 storage/ -R
 - cd ../docker
-- docker-compose exec qst-php-web php /var/www/html/artisan migrate:fresh --seed
-- visit http://localhost:9085 
-
-docker inspect -f '{{.Name}} - {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $(docker ps -aq)
+- docker-compose exec qst-php-web php /var/www/html/artisan migrate
+- visit http://localhost:9085
