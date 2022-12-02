@@ -54,7 +54,7 @@ services:
     networks:
       - docker-network
   alijomehri-rabbitmq:
-    container_name: "rabbitmq"
+    container_name: "alijomehri-rabbitmq"
     image: rabbitmq:3.8-management-alpine
     environment:
       - RABBITMQ_DEFAULT_USER=rabbituser
