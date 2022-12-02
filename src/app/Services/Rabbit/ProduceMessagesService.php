@@ -34,6 +34,7 @@ class ProduceMessagesService extends ProduceMessagesBaseService
          * Declare exchange and queue
          */
         $this->queue_declare();
+        $this->queue_bind();
 
         /**
          * Get message to be published
@@ -44,11 +45,6 @@ class ProduceMessagesService extends ProduceMessagesBaseService
          * Publish message on channel
          */
         $this->basic_publish($message);
-
-        /**
-         * Free up memory
-         */
-        $this->close();
     }
 
     /**

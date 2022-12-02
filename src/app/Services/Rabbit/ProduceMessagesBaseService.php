@@ -4,6 +4,7 @@ namespace App\Services\Rabbit;
 
 use App\Services\BaseService;
 use PhpAmqpLib\Channel\AMQPChannel;
+use PhpAmqpLib\Message\AMQPMessage;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 
 abstract class ProduceMessagesBaseService extends BaseService
@@ -107,11 +108,32 @@ abstract class ProduceMessagesBaseService extends BaseService
     }
 
     /**
-     * @param $message
      * @return void
      */
-    public function basic_publish($message): void
+    public function queue_bind(): void
+    {
+        $this->channel->queue_bind($this->queueName, $this->exchange, $this->queueName);
+    }
+
+    /**
+     * @param AMQPMessage $message
+     * @return void
+     */
+    public function basic_publish(AMQPMessage $message): void
     {
         $this->channel->basic_publish($message, $this->exchange, $this->queueName);
     }
+
+    /**
+     *
+     */
+    public function __destruct()
+    {
+        /**
+         * Free up memory
+         */
+        $this->close();
+    }
+
+
 }

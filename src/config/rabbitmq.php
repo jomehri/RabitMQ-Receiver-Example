@@ -8,6 +8,6 @@ return [
     |--------------------------------------------------------------------------
     |
     */
-    'number_of_messages_to_produce' => 2,
+    'number_of_messages_to_produce' => 1000,
 
 ];

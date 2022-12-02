@@ -38,11 +38,14 @@ class ProduceMessagesCommand extends Command
      */
     public function handle(): void
     {
-        $producerService = new ProduceMessagesService();
-        $producerService->produce();
-
         /** @var int $num number of messages to get produced */
         $num = config("rabbitmq.number_of_messages_to_produce");
+
+        $producerService = new ProduceMessagesService();
+
+        for ($i = 1; $i <= $num; $i++) {
+            $producerService->produce();
+        }
 
         $this->info("{$num} messages produced and put in queue, ready to receive");
     }
