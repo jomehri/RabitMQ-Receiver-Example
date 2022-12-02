@@ -3,8 +3,9 @@
 ## What's included:
 
 - Production Readiness (Dockerized)
-- SOLID, DRY, OOP, KISS
+- No Eloquent, Doctrine used (pure mysql)
 - Unit/Feature tests
+- No Laravel rabbitMQ packages used (like vyuldashev 's package), just pure php-amqplib used
 
 ## Installation:
 
@@ -19,4 +20,4 @@
 - sudo chmod 777 storage/ -R
 - cd ../docker
 - docker-compose exec alijomehri-php-web php artisan migrate
-- visit http://localhost:9085
+- docker-compose exec alijomehri-php-web php artisan rabbitmq:produce (to produce messages)
