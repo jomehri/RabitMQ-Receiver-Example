@@ -113,6 +113,16 @@ abstract class MessagesBaseService extends BaseService
     }
 
     /**
+     * Keep worker alive
+     *
+     * @return bool
+     */
+    public function is_consuming(): bool
+    {
+        return true;
+    }
+
+    /**
      * @return void
      */
     public function queue_declare(): void

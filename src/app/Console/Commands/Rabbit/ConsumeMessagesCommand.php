@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands\Rabbit;
 
+use ErrorException;
 use Illuminate\Console\Command;
 use App\Services\Rabbit\ConsumeMessagesService;
 
@@ -35,6 +36,7 @@ class ConsumeMessagesCommand extends Command
      * Produce some fake messages in rabbitmq
      *
      * @return void
+     * @throws ErrorException
      */
     public function handle(): void
     {
