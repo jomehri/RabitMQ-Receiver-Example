@@ -7,7 +7,7 @@ use PhpAmqpLib\Channel\AMQPChannel;
 use PhpAmqpLib\Message\AMQPMessage;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 
-abstract class ProduceMessagesBaseService extends BaseService
+abstract class MessagesBaseService extends BaseService
 {
     /** @var AMQPStreamConnection $connection */
     public AMQPStreamConnection $connection;
@@ -44,6 +44,9 @@ abstract class ProduceMessagesBaseService extends BaseService
 
     /** @var bool $autoDelete queue is deleted when last consumer unsubscribes */
     protected bool $autoDelete;
+
+    /** @var string $queueName routing_key */
+    protected string $queueName = 'notification_queue';
 
     /**
      *
@@ -83,12 +86,22 @@ abstract class ProduceMessagesBaseService extends BaseService
          * Make Exchange
          */
         $this->channel->exchange_declare($this->exchange, $this->exchangeType, $this->passive, $this->durable, $this->autoDelete);
+
+        /**
+         * Declare exchange and queue
+         */
+        $this->queue_declare();
+
+        /**
+         * Bind Queue to Exchange
+         */
+        $this->queue_bind();
     }
 
     /**
      * @return void
      */
-    public abstract function produce(): void;
+    public abstract function run(): void;
 
     /**
      * @return void
@@ -122,6 +135,15 @@ abstract class ProduceMessagesBaseService extends BaseService
     public function basic_publish(AMQPMessage $message): void
     {
         $this->channel->basic_publish($message, $this->exchange, $this->queueName);
+    }
+
+    /**
+     * @param $fn
+     * @return void
+     */
+    public function basic_consume($fn): void
+    {
+        $this->channel->basic_consume($this->queueName, '', false, false, $this->exclusive, false, $fn);
     }
 
     /**

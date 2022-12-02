@@ -3,16 +3,16 @@
 namespace App\Console\Commands\Rabbit;
 
 use Illuminate\Console\Command;
-use App\Services\Rabbit\ProduceMessagesService;
+use App\Services\Rabbit\ConsumeMessagesService;
 
-class ProduceMessagesCommand extends Command
+class ConsumeMessagesCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'rabbitmq:produce';
+    protected $signature = 'rabbitmq:consume';
 
     /**
      * The console command description.
@@ -38,15 +38,9 @@ class ProduceMessagesCommand extends Command
      */
     public function handle(): void
     {
-        /** @var int $num number of messages to get produced */
-        $num = config("rabbitmq.number_of_messages_to_produce");
+        $consumeService = new ConsumeMessagesService();
+        $consumeService->run();
 
-        $producerService = new ProduceMessagesService();
-
-        for ($i = 1; $i <= $num; $i++) {
-            $producerService->run();
-        }
-
-        $this->info("{$num} messages produced and put in queue, ready to receive");
+        $this->info("messages consumed");
     }
 }

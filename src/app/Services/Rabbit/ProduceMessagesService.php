@@ -4,9 +4,8 @@ namespace App\Services\Rabbit;
 
 use PhpAmqpLib\Message\AMQPMessage;
 
-class ProduceMessagesService extends ProduceMessagesBaseService
+class ProduceMessagesService extends MessagesBaseService
 {
-    protected string $queueName = 'notification_queue';
 
     /** @var array $messages */
     private array $messages = [
@@ -28,21 +27,16 @@ class ProduceMessagesService extends ProduceMessagesBaseService
     /**
      * @return void
      */
-    public function produce(): void
+    public function run(): void
     {
-        /**
-         * Declare exchange and queue
-         */
-        $this->queue_declare();
-        $this->queue_bind();
 
         /**
-         * Get message to be published
+         * Get random message to get published
          */
         $message = new AMQPMessage($this->generateFakeMessage());
 
         /**
-         * Publish message on channel
+         * Publish message on Exchange
          */
         $this->basic_publish($message);
     }
