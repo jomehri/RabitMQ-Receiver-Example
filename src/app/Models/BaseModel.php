@@ -41,11 +41,6 @@ abstract class BaseModel extends Model implements IBaseModel
     abstract public static function getDBTable(): string;
 
     /**
-     * @return string
-     */
-    abstract public static function getGroup(): string;
-
-    /**
      * @return int
      */
     public function getId(): int

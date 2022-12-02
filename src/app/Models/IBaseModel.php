@@ -15,11 +15,6 @@ interface IBaseModel
     static function getDBTable(): string;
 
     /**
-     * @return string
-     */
-    static function getGroup(): string;
-
-    /**
      * @return bool
      */
     function hasId(): bool;
