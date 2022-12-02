@@ -1,2 +1,28 @@
-# RabitMQ-Receiver-Example
-An example of implementing RabbitMQ with Laravel
+## Questioner
+
+## What's included:
+
+- Dockerized
+- Swagger API Documentation
+- <b>Repository Design Pattern</b>
+- <b>Race condition</b> prevention (database locks: both MySql & Redis)
+- SOLID, DRY, OOP, KISS
+- Feature tests
+- Form request validation
+- Localization and translates
+
+## Installation:
+
+- cd docker
+- docker-compose build
+- docker-compose up --remove-orphans
+- cd ../src
+- composer install
+- cp .env.example .env
+- cp .env.testing.example .env.testing
+- sudo chmod 777 storage/ -R
+- cd ../docker
+- docker-compose exec qst-php-web php /var/www/html/artisan migrate:fresh --seed
+- visit http://localhost:9085 
+
+docker inspect -f '{{.Name}} - {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $(docker ps -aq)

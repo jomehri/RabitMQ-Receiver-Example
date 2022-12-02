@@ -1,0 +1,66 @@
+version: '3.0'
+networks:
+  docker-network:
+    driver: bridge
+services:
+  qst-php-web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: "docker-qst-php-web"
+    working_dir: "/var/www/html"
+    volumes:
+      - "../src:/var/www/html"
+      - "./php/php.ini:/usr/local/etc/php/conf.d/php.ini"
+    ports:
+      - "9900:9000"
+    networks:
+      - docker-network
+  qst-web:
+    image: nginx:stable-alpine
+    container_name: "docker-qst-web"
+    restart: unless-stopped
+    working_dir: "/var/www/html"
+    ports:
+      - "9085:80"
+    volumes:
+      - "../src:/var/www/html"
+      - "./nginx/web/logs:/var/log/nginx"
+      - "./nginx/web/default.conf:/etc/nginx/conf.d/default.conf"
+    depends_on:
+      - qst-php-web
+      - qst-mysql
+      - qst-redis
+    links:
+      - qst-mysql
+      - qst-redis
+    networks:
+      - docker-network
+  qst-mysql:
+    image: mysql:8.0.25
+    container_name: "docker-qst-mysql"
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "9306:3306"
+    volumes:
+      - "./~mysql/dbdata:/var/lib/mysql"
+      - "./mysql/my.cnf:/etc/mysql/my.cnf"
+      - "./mysql/init:/docker-entrypoint-initdb.d"
+    environment:
+      MYSQL_ROOT_PASSWORD: "docker"
+      SERVICE_TAGS: dev
+      SERVICE_NAME: qst-mysql
+    networks:
+      - docker-network
+  qst-redis:
+    image: redis
+    container_name: "docker-qst-redis"
+    restart: always
+    ports:
+      - "9379:6379"
+    volumes:
+      - "./redis/data:/data"
+      - "./redis/redis.conf:/usr/local/etc/redis/redis.conf"
+    networks:
+      - docker-network
