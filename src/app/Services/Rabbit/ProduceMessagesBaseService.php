@@ -26,8 +26,11 @@ abstract class ProduceMessagesBaseService extends BaseService
     /** @var string $password password to connect to server */
     protected string $password;
 
-    /** @var string $exchange exchange type */
+    /** @var string $exchange exchange name */
     protected string $exchange;
+
+    /** @var string $exchangeType exchange type */
+    protected string $exchangeType;
 
     /** @var bool $passive can use this to check whether an exchange exists without modifying the server state */
     protected bool $passive;
@@ -51,6 +54,7 @@ abstract class ProduceMessagesBaseService extends BaseService
         $this->user = config("queue.connections.rabbitmq.user");
         $this->password = config("queue.connections.rabbitmq.password");
         $this->exchange = config("queue.connections.rabbitmq.exchange");
+        $this->exchangeType = config("queue.connections.rabbitmq.exchange_type");
         $this->passive = config("queue.connections.rabbitmq.passive");
         $this->durable = config("queue.connections.rabbitmq.durable");
         $this->exclusive = config("queue.connections.rabbitmq.exclusive");
@@ -64,9 +68,20 @@ abstract class ProduceMessagesBaseService extends BaseService
      */
     protected function initialize(): void
     {
+        /**
+         * Make Connection
+         */
         $this->connection = new AMQPStreamConnection($this->host, $this->port, $this->user, $this->password);
 
+        /**
+         * Make Channel
+         */
         $this->channel = $this->connection->channel();
+
+        /**
+         * Make Exchange
+         */
+        $this->channel->exchange_declare($this->exchange, $this->exchangeType, $this->passive, $this->durable, $this->autoDelete);
     }
 
     /**

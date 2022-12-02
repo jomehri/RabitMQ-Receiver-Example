@@ -51,8 +51,13 @@ class ProduceMessagesService extends ProduceMessagesBaseService
         $this->close();
     }
 
+    /**
+     * @return false|string
+     */
     private function generateFakeMessage()
     {
-        return $this->messages[array_rand($this->messages)];
+        $result = $this->messages[array_rand($this->messages)];
+
+        return json_encode($result);
     }
 }
