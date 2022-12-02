@@ -3,49 +3,56 @@
 namespace App\Services\Rabbit;
 
 use PhpAmqpLib\Message\AMQPMessage;
-use PhpAmqpLib\Connection\AMQPStreamConnection;
 
 class ProduceMessagesService extends ProduceMessagesBaseService
 {
-    /**
-     *
-     */
-    public function __construct()
-    {
+    protected string $queueName = 'notification_queue';
 
-    }
+    /** @var array $messages */
+    private array $messages = [
+        [
+            'to' => '989121111111',
+            'name' => 'John Smith',
+            'message' => 'Hello John, Your order is ready.',
+            'type' => 'sms',
+        ],
+        [
+            'to' => 'john.smith@gmail.com',
+            'name' => 'John Smith',
+            'message' => '<b>Hello John</b>, <br /> <h3>Your order is ready.</h3>',
+            'type' => 'email',
+        ]
+    ];
+
 
     /**
      * @return void
      */
     public function produce(): void
     {
-        $connection = new AMQPStreamConnection(
-            'localhost',    #host - host name where the RabbitMQ server is runing
-            5672,           #port - port number of the service, 5672 is the default
-            'guest',        #user - username to connect to server
-            'guest'         #password
-        );
+        /**
+         * Declare exchange and queue
+         */
+        $this->queue_declare();
 
-        $channel = $connection->channel();
+        /**
+         * Get message to be published
+         */
+        $message = new AMQPMessage($this->generateFakeMessage());
 
-        $channel->queue_declare(
-            'pizzaTime',    #queue name - Queue names may be up to 255 bytes of UTF-8 characters
-            false,          #passive - can use this to check whether an exchange exists without modifying the server state
-            false,          #durable - make sure that RabbitMQ will never lose our queue if a crash occurs - the queue will survive a broker restart
-            false,          #exclusive - used by only one connection and the queue will be deleted when that connection closes
-            false           #autodelete - queue is deleted when last consumer unsubscribes
-        );
+        /**
+         * Publish message on channel
+         */
+        $this->basic_publish($message);
 
-        $msg = new AMQPMessage($message);
+        /**
+         * Free up memory
+         */
+        $this->close();
+    }
 
-        $channel->basic_publish(
-            $msg,           #message
-            '',             #exchange
-            'pizzaTime'     #routing key
-        );
-
-        $channel->close();
-        $connection->close();
+    private function generateFakeMessage()
+    {
+        return $this->messages[array_rand($this->messages)];
     }
 }

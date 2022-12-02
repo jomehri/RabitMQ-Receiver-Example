@@ -76,7 +76,12 @@ return [
             'user' => env('RABBITMQ_USER', 'guest'),
             'password' => env('RABBITMQ_PASSWORD', 'guest'),
             'vhost' => env('RABBITMQ_VHOST', '/'),
+            'exchange' => env('RABBITMQ_EXCHANGE', 'direct'),
             'worker' => env('RABBITMQ_WORKER', 'default'),
+            'passive' => env('RABBITMQ_PASSIVE', false),
+            'durable' => env('RABBITMQ_DURABLE', true),
+            'exclusive' => env('RABBITMQ_EXCLUSIVE', false),
+            'auto_delete' => env('RABBITMQ_AUTO_DELETE', false),
         ],
 
     ],
