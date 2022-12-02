@@ -3,11 +3,11 @@ networks:
   docker-network:
     driver: bridge
 services:
-  alijomehri-php-web:
+  php-web:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: "docker-alijomehri-php-web"
+    container_name: "docker-php-web"
     working_dir: "/var/www/html"
     volumes:
       - "../src:/var/www/html"
@@ -16,9 +16,9 @@ services:
       - "9900:9000"
     networks:
       - docker-network
-  alijomehri-web:
+  web:
     image: nginx:stable-alpine
-    container_name: "docker-alijomehri-web"
+    container_name: "docker-web"
     restart: unless-stopped
     working_dir: "/var/www/html"
     ports:
@@ -28,17 +28,17 @@ services:
       - "./nginx/web/logs:/var/log/nginx"
       - "./nginx/web/default.conf:/etc/nginx/conf.d/default.conf"
     depends_on:
-      - alijomehri-php-web
-      - alijomehri-mysql
-      - alijomehri-rabbitmq
+      - php-web
+      - mysql
+      - rabbitmq
     links:
-      - alijomehri-mysql
-      - alijomehri-rabbitmq
+      - mysql
+      - rabbitmq
     networks:
       - docker-network
-  alijomehri-mysql:
+  mysql:
     image: mysql:8.0.25
-    container_name: "docker-alijomehri-mysql"
+    container_name: "docker-mysql"
     restart: unless-stopped
     tty: true
     ports:
@@ -50,11 +50,11 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: "lkjasd$%;lk987FdwL9(k"
       SERVICE_TAGS: dev
-      SERVICE_NAME: alijomehri-mysql
+      SERVICE_NAME: mysql
     networks:
       - docker-network
-  alijomehri-rabbitmq:
-    container_name: "alijomehri-rabbitmq"
+  rabbitmq:
+    container_name: "rabbitmq"
     image: rabbitmq:3.8-management-alpine
     environment:
       - RABBITMQ_DEFAULT_USER=rabbituser

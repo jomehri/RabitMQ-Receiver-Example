@@ -2,14 +2,15 @@
 
 namespace App\Services\Rabbit;
 
+use ErrorException;
 use Illuminate\Support\Facades\Log;
-use PhpAmqpLib\Message\AMQPMessage;
 
 class ConsumeMessagesService extends MessagesBaseService
 {
 
     /**
      * @return void
+     * @throws ErrorException
      */
     public function run(): void
     {
@@ -25,6 +26,10 @@ class ConsumeMessagesService extends MessagesBaseService
          * Publish message on channel
          */
         $this->basic_consume($fn);
+
+//        while ($this->channel->is_open()) {
+//            $this->channel->wait();
+//        }
     }
 
 }
