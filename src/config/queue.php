@@ -83,6 +83,7 @@ return [
             'durable' => env('RABBITMQ_DURABLE', true),
             'exclusive' => env('RABBITMQ_EXCLUSIVE', false),
             'auto_delete' => env('RABBITMQ_AUTO_DELETE', false),
+            'keep_alive' => env('RABBITMQ_KEEP_ALIVE', true),
         ],
 
     ],

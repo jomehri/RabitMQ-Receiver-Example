@@ -46,6 +46,9 @@ abstract class MessagesBaseService extends BaseService
     /** @var bool $autoDelete queue is deleted when last consumer unsubscribes */
     protected bool $autoDelete;
 
+    /** @var bool $keepAlive keep consumer alive */
+    protected bool $keepAlive;
+
     /** @var string $queueName routing_key */
     protected string $queueName = 'notification_queue';
 
@@ -64,6 +67,7 @@ abstract class MessagesBaseService extends BaseService
         $this->durable = config("queue.connections.rabbitmq.durable");
         $this->exclusive = config("queue.connections.rabbitmq.exclusive");
         $this->autoDelete = config("queue.connections.rabbitmq.auto_delete");
+        $this->keepAlive = config("queue.connections.rabbitmq.keep_alive");
 
         $this->initialize();
     }
@@ -120,7 +124,7 @@ abstract class MessagesBaseService extends BaseService
      */
     public function is_consuming(): bool
     {
-        return true;
+        return $this->keepAlive;
     }
 
     /**

@@ -10,9 +10,17 @@ class NotificationFeatureTest extends BaseFeature
     /**
      * @return void
      */
-    public function test_notification_produce_command(): void
+    public function test_notification_produce_health_command(): void
     {
-        $this->assertTrue(true);
+        $this->artisan('rabbitmq:produce')->assertExitCode(0);
+    }
+
+    /**
+     * @return void
+     */
+    public function test_notification_consume_health_command(): void
+    {
+        $this->artisan('rabbitmq:consume')->assertExitCode(0);
     }
 
 }
