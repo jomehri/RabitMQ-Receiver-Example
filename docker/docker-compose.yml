@@ -3,11 +3,11 @@ networks:
   docker-network:
     driver: bridge
 services:
-  php-web:
+  qst-php-web:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: "docker-php-web"
+    container_name: "docker-qst-php-web"
     working_dir: "/var/www/html"
     volumes:
       - "../src:/var/www/html"
@@ -16,9 +16,9 @@ services:
       - "9900:9000"
     networks:
       - docker-network
-  web:
+  qst-web:
     image: nginx:stable-alpine
-    container_name: "docker-web"
+    container_name: "docker-qst-web"
     restart: unless-stopped
     working_dir: "/var/www/html"
     ports:
@@ -28,17 +28,17 @@ services:
       - "./nginx/web/logs:/var/log/nginx"
       - "./nginx/web/default.conf:/etc/nginx/conf.d/default.conf"
     depends_on:
-      - php-web
-      - mysql
-      - rabbitmq
+      - qst-php-web
+      - qst-mysql
+      - qst-rabbitmq
     links:
-      - mysql
-      - rabbitmq
+      - qst-mysql
+      - qst-rabbitmq
     networks:
       - docker-network
-  mysql:
+  qst-mysql:
     image: mysql:8.0.25
-    container_name: "docker-mysql"
+    container_name: "docker-qst-mysql"
     restart: unless-stopped
     tty: true
     ports:
@@ -50,11 +50,11 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: "docker"
       SERVICE_TAGS: dev
-      SERVICE_NAME: mysql
+      SERVICE_NAME: qst-mysql
     networks:
       - docker-network
-  rabbitmq:
-    container_name: "rabbitmq"
+  qst-rabbitmq:
+    container_name: "qst-rabbitmq"
     image: rabbitmq:3.8-management-alpine
     environment:
       - RABBITMQ_DEFAULT_USER=rabbituser
