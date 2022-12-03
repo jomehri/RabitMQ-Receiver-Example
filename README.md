@@ -25,3 +25,4 @@
 - open up a few consumer workers by this command in multiple terminals: sudo docker-compose exec qst-php-web php artisan
   rabbitmq:consume
 - sudo docker-compose exec qst-php-web php artisan rabbitmq:produce (to produce 1000 messages)
+- sudo docker-compose exec qst-php-web php artisan test

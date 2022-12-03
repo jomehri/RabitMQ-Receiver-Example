@@ -44,7 +44,7 @@ class ProduceMessagesService extends MessagesBaseService
     /**
      * @return false|string
      */
-    private function generateFakeMessage()
+    public function generateFakeMessage()
     {
         $result = $this->messages[array_rand($this->messages)];
 
