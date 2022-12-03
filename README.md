@@ -15,11 +15,12 @@
 - cd docker
 - docker-compose up
 - cd ../src
-- composer install
 - cp .env.example .env
 - cp .env.testing.example .env.testing
+- composer install --ignore-platform-reqs
 - sudo chmod 777 storage/ -R
 - cd ../docker
 - docker-compose exec php-web php artisan migrate
-- open up a few consumer workers by this command in multiple terminals: docker-compose exec php-web php artisan rabbitmq:consume
+- open up a few consumer workers by this command in multiple terminals: docker-compose exec php-web php artisan
+  rabbitmq:consume
 - docker-compose exec php-web php artisan rabbitmq:produce (to produce 1000 messages)
