@@ -20,7 +20,8 @@
 - composer install --ignore-platform-reqs
 - sudo chmod 777 storage/ -R
 - cd ../docker
-- sudo docker-compose exec qst-php-web php artisan migrate
+- sudo docker-compose exec qst-php-web php artisan migrate:fresh
+- sudo docker-compose exec qst-php-web php artisan migrate:fresh --env=testing
 - open up a few consumer workers by this command in multiple terminals: sudo docker-compose exec qst-php-web php artisan
   rabbitmq:consume
 - sudo docker-compose exec qst-php-web php artisan rabbitmq:produce (to produce 1000 messages)

@@ -8,6 +8,6 @@ return [
     |--------------------------------------------------------------------------
     |
     */
-    'number_of_messages_to_produce' => 1000,
+    'number_of_messages_to_produce' => env("RABBITMQ_NUMBER_OF_MESSAGES", 1000),
 
 ];

@@ -23,4 +23,13 @@ class NotificationFeatureTest extends BaseFeature
         $this->artisan('rabbitmq:consume')->assertExitCode(0);
     }
 
+    /**
+     * @return void
+     */
+    public function test_notification_produce_has_correct_prompt_message(): void
+    {
+        $this->artisan('rabbitmq:produce')
+            ->expectsOutput(config("rabbitmq.number_of_messages_to_produce") . ' messages produced and put in queue, ready to receive');
+    }
+
 }

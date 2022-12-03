@@ -17,7 +17,7 @@ class EmailNotificationService extends BaseService implements INotificationServi
         /**
          * Send mail() to user
          */
-//        mail($data['to'], 'New Notification Sent', $data['message']);
+        /*mail($data['to'], 'New Notification Sent', $data['message']);*/
     }
 
 }

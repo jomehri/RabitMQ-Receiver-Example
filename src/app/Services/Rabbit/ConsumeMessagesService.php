@@ -2,9 +2,9 @@
 
 namespace App\Services\Rabbit;
 
-use Illuminate\Support\Facades\Log;
 use Throwable;
 use ErrorException;
+use Illuminate\Support\Facades\Log;
 use PhpAmqpLib\Message\AMQPMessage;
 use App\Interfaces\Repositories\Notification\INotificationRepository;
 

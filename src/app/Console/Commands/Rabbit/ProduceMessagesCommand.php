@@ -53,6 +53,6 @@ class ProduceMessagesCommand extends Command
             $producerService->run();
         }
 
-        $this->info("{$num} messages produced and put in queue, ready to receive");
+        $this->line("{$num} messages produced and put in queue, ready to receive");
     }
 }

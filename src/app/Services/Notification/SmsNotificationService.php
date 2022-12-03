@@ -3,8 +3,8 @@
 namespace App\Services\Notification;
 
 use App\Services\BaseService;
-use App\Interfaces\Services\Notification\INotificationService;
 use Illuminate\Support\Facades\Http;
+use App\Interfaces\Services\Notification\INotificationService;
 
 class SmsNotificationService extends BaseService implements INotificationService
 {
@@ -29,7 +29,7 @@ class SmsNotificationService extends BaseService implements INotificationService
         /**
          * Send sms() to user
          */
-//        Http::post($this->smsProviderUrl, $data);
+        /*Http::post($this->smsProviderUrl, $data);*/
     }
 
 }
