@@ -1,11 +1,12 @@
 <?php
 
-namespace Tests;
+namespace Tests\Feature;
 
+use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class BaseTest extends TestCase
+class BaseFeature extends TestCase
 {
     use RefreshDatabase, WithFaker;
 }
