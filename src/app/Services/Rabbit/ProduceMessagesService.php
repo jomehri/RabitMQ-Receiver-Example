@@ -43,9 +43,9 @@ class ProduceMessagesService extends MessagesBaseService implements IProduceMess
     }
 
     /**
-     * @return false|string
+     * @return string|null
      */
-    public function generateFakeMessage()
+    public function generateFakeMessage(): ?string
     {
         $result = $this->messages[array_rand($this->messages)];
 

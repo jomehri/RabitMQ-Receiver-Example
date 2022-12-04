@@ -4,6 +4,9 @@ namespace Tests\Feature\App;
 
 use Tests\Feature\BaseFeature;
 
+/**
+ * Black Box testing for testing only starting point and end point of methods without knowing what's inside
+ */
 class NotificationFeatureTest extends BaseFeature
 {
 
