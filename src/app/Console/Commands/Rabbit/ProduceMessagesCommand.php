@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands\Rabbit;
 
+use App\Interfaces\Services\Notification\IProduceMessageService;
 use Illuminate\Console\Command;
 use App\Services\Rabbit\ProduceMessagesService;
 use App\Interfaces\Repositories\Notification\INotificationRepository;
@@ -22,19 +23,18 @@ class ProduceMessagesCommand extends Command
      */
     protected $description = 'Produces a number of fake messages in rabbitMQ';
 
-    /** @var INotificationRepository $notificationRepository */
-    private INotificationRepository $notificationRepository;
+    /** @var IProduceMessageService $produceMessageService */
+    private IProduceMessageService $produceMessageService;
+
 
     /**
-     * Create a new command instance.
-     *
-     * @return void
+     * @param IProduceMessageService $produceMessageService
      */
-    public function __construct(INotificationRepository $notificationRepository)
+    public function __construct(IProduceMessageService $produceMessageService)
     {
         parent::__construct();
 
-        $this->notificationRepository = $notificationRepository;
+        $this->produceMessageService = $produceMessageService;
     }
 
     /**
@@ -47,10 +47,8 @@ class ProduceMessagesCommand extends Command
         /** @var int $num number of messages to get produced */
         $num = config("rabbitmq.number_of_messages_to_produce");
 
-        $producerService = new ProduceMessagesService();
-
         for ($i = 1; $i <= $num; $i++) {
-            $producerService->run();
+            $this->produceMessageService->run();
         }
 
         $this->line("{$num} messages produced and put in queue, ready to receive");

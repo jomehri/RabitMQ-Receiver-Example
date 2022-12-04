@@ -4,8 +4,9 @@ namespace App\Services\Notification;
 
 use App\Services\BaseService;
 use App\Interfaces\Services\Notification\INotificationService;
+use App\Interfaces\Services\Notification\IEmailNotificationService;
 
-class EmailNotificationService extends BaseService implements INotificationService
+class EmailNotificationService extends BaseService implements INotificationService, IEmailNotificationService
 {
 
     /**

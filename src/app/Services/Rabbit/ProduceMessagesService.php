@@ -3,8 +3,9 @@
 namespace App\Services\Rabbit;
 
 use PhpAmqpLib\Message\AMQPMessage;
+use App\Interfaces\Services\Notification\IProduceMessageService;
 
-class ProduceMessagesService extends MessagesBaseService
+class ProduceMessagesService extends MessagesBaseService implements IProduceMessageService
 {
 
     /** @var array $messages */

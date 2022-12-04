@@ -5,8 +5,9 @@ namespace App\Services\Notification;
 use App\Services\BaseService;
 use Illuminate\Support\Facades\Http;
 use App\Interfaces\Services\Notification\INotificationService;
+use App\Interfaces\Services\Notification\ISmsNotificationService;
 
-class SmsNotificationService extends BaseService implements INotificationService
+class SmsNotificationService extends BaseService implements INotificationService, ISmsNotificationService
 {
     /** @var string $smsProviderUrl */
     private string $smsProviderUrl;

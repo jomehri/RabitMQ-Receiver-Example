@@ -6,9 +6,10 @@ use Throwable;
 use ErrorException;
 use Illuminate\Support\Facades\Log;
 use PhpAmqpLib\Message\AMQPMessage;
+use App\Interfaces\Services\Notification\IConsumeMessageService;
 use App\Interfaces\Repositories\Notification\INotificationRepository;
 
-class ConsumeMessagesService extends MessagesBaseService
+class ConsumeMessagesService extends MessagesBaseService implements IConsumeMessageService
 {
 
     /** @var INotificationRepository $notificationRepository */
