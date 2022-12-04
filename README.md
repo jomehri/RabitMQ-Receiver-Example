@@ -1,5 +1,14 @@
 ## Questioner
 
+A simple Dockerized Laravel application, provided only 2 artisan commands to produce and consume messages with rabbitMQ
+and a small automated testing as a sample for both black/white testing strategies
+
+## Author
+
+- name: Ali Jomehri
+- phone: 09352770177
+- mail: ajomehri@gmail.com
+
 ## What's included:
 
 - PHP 8
