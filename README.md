@@ -6,6 +6,7 @@
 - No Eloquent, Doctrine used (pure mysql)
 - No Laravel rabbitMQ packages used (like vyuldashev 's package), just pure php-amqplib used
 - Strategy & Repository design patterns
+- Using Laravel service container concept, binding of services & repositories
 - Unit/Feature tests
 - White Box testing for services without triggering real message delivery (mocking)
 - Black Box feature tests to test the start/end point of services
